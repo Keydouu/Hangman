@@ -8,9 +8,14 @@
 int start()
 {
     char nomDuDictionnaire[] = "Dictionnaire",lettreEntree,c=0;
-    int Victoire=0,EssaiesRestants=EssaiesMax,i=0,TailleDuTableau;
+    int Victoire=0,EssaiesRestants=EssaiesMax,i=0,TailleDuTableau,myMemory[26];
     char *motTrouve,*motSecret;
     FILE* FichierDuDictionnaire=NULL;
+    while(i<26)
+    {
+       myMemory[i]=1;
+       i++;
+    }
     FichierDuDictionnaire=fopen(nomDuDictionnaire,"r");
     if (FichierDuDictionnaire==NULL)
     {
@@ -20,13 +25,19 @@ int start()
     fclose(FichierDuDictionnaire);
     motTrouve=CreationDuTableau(TailleDuTableau);
     RemplirEtoiles (motTrouve,TailleDuTableau);
-    printf("Bienvenue dans le Pendu !");
     while ((Victoire<TailleDuTableau)&&(EssaiesRestants!=0))
     {
         Victoire=0;
-        printf("\n\nIl vous reste %d coups a jouer",EssaiesRestants);
-        printf("\nQuel est le mot secret ? %s",motTrouve);
-        printf("\nProposez une lettre : ");
+        printf("    Bienvenue dans le Pendu !");
+        printf("\n\n    Il vous reste %d coups a jouer",EssaiesRestants);
+        printf("\n  Quel est le mot secret ? %s",motTrouve);
+        /*printf("\n  les lettres restantes sont :");
+        for(i=0;i<26;i++)
+        {
+            if(myMemory[i])
+                {printf(" %c",(i+97));}
+        }*/
+        printf("\n  Proposez une lettre : ");
         lettreEntree=getch();
         lettreEntree=tolower(lettreEntree);
         printf("%c",lettreEntree);
@@ -46,11 +57,14 @@ int start()
             EssaiesRestants=-EssaiesRestants;
         else
             EssaiesRestants--;
+        if ((96<lettreEntree)&&(lettreEntree<123))
+        {myMemory[lettreEntree-97]=0;}
+        system("cls");
     }
     if (EssaiesRestants!=0)
-        printf("\n\nFelicitation ! vous avez gagne !\nLe mot est %s\nIl vous restait %d essaies",motTrouve,EssaiesRestants);
+        printf("\n\n    Felicitation ! vous avez gagne !\n    Le mot est %s\n    Il vous restait %d essaies",motTrouve,EssaiesRestants);
     else
-        printf("\n\nGAME OVER\nLe mot que vous cherchez etait %s",&motSecret);
+        printf("\n\n    GAME OVER\n Le mot que vous cherchez etait %s",&motSecret);
     free(motTrouve);
     free(motSecret);
     Sleep(4000);
