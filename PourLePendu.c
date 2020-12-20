@@ -4,8 +4,8 @@
 #include "PourLePendu.h"
 char* CreationDuTableau(int Taille)
 {
-    int PointeurSurTableau=NULL;
-    PointeurSurTableau=malloc((Taille+1)*sizeof(char));
+    char* PointeurSurTableau=NULL;
+    PointeurSurTableau=(char*)malloc((Taille+1)*sizeof(char));
     if (PointeurSurTableau == NULL)
     {
         printf("ECHEC");
